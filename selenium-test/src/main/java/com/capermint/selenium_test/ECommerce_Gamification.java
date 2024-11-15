@@ -292,9 +292,7 @@ public class ECommerce_Gamification extends CommanMathods{
             printSectionHeader("Cost to Gamify an App Section");
             
             checkImageVisibility(driver, "//img[@class='attachment-large size-large wp-image-73640']");
-            
-            
-            
+
             validateTitle(driver, "//h2[contains(text(),'How Much Does It Cost to')]", "How Much Does It Cost to Gamify an E-Commerce App?", "Title");
             validateTitle(driver, "//p[contains(text(),'E-Commerce App Gamification can cost around $35,00')]", "E-Commerce App Gamification can cost around $35,000 to $40,000 for a single platform with basic functionality. However, if you wish to add advanced gamification features and functionalities to your mobile app, with support for multiple platforms, it may cost up to $80,000. ", "Text");
             

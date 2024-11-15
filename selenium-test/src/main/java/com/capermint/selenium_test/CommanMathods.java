@@ -155,6 +155,26 @@ public class CommanMathods {
         }
         System.out.println("All expected texts are present in the list.");
     }
+    
+    public static void verifyMultipleLists(WebDriver driver, List<By> locators, List<List<String>> expectedTextsLists) {
+        if (locators.size() != expectedTextsLists.size()) {
+            throw new IllegalArgumentException("The number of locators and expected text lists must match.");
+        }
+
+        for (int i = 0; i < locators.size(); i++) {
+            By locator = locators.get(i);
+            List<String> expectedTexts = expectedTextsLists.get(i);
+
+            try {
+                verifyTextInList(driver, locator, expectedTexts);
+            } catch (AssertionError e) {
+                System.err.println("Validation failed for list with locator: " + locator.toString());
+                throw e;
+            }
+        }
+        System.out.println("All lists validated successfully.");
+    }
+
 
     private static String buildNameXpath(String type, String name) {
 

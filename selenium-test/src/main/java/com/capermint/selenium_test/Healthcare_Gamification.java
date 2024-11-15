@@ -309,14 +309,230 @@ public class Healthcare_Gamification extends CommanMathods {
                 
                 // Page Scrolling
                 
-                scrollToElementByXpath(driver, "");
+                scrollToElementByXpath(driver, "(//h2[@class='elementor-heading-title elementor-size-default'])[12]");
                 
                 // New Section
                 
                 printSectionHeader("New Section");
                 
-                validateTitle(driver, "", "", "");
-                validateTitle(driver, "", "", "");
+                validateTitle(driver, "(//h2[@class='elementor-heading-title elementor-size-default'])[12]", "Gamification In Healthcare: How Can It Be Helpful?", "Tilte");
+                validateTitle(driver, "//p[contains(text(),'Gamification can be helpful for the Healthcare ind')]", "Gamification can be helpful for the Healthcare industry in several ways. Our team of gamification experts have created a list of the most prominent ways Gamification in Healthcare can be helpful for different beneficiaries.", "Content");
+                
+                String[] BeneficiariesNames = {
+                		"For Doctors",
+                		"For Patients",
+                		"For Medical Staff",
+                		"For Admin",
+                		"For Hospitals"
+                };
+                
+                String[] BeneficiariesImages = {
+                		"(//*[name()='path'])[24]",
+                		"(//*[name()='path'])[25]",
+                		"(//*[name()='path'])[26]",
+                		"(//*[name()='path'])[27]",
+                		"(//*[name()='path'])[28]"
+                };
+                
+                validateElements(driver, BeneficiariesNames, null, BeneficiariesImages, "Benefits");
+                
+                List<By> locators = Arrays.asList(
+                        By.xpath("(//ul)[67]/li"),
+                        By.xpath("(//ul)[68]/li"),
+                        By.xpath("(//ul)[69]/li"),
+                        By.xpath("(//ul)[70]/li"),
+                        By.xpath("(//ul)[71]/li")
+                    );
+
+                List<List<String>> expectedTextsLists = Arrays.asList(
+                        Arrays.asList(
+                        		"Improved Time Management & Regular Patient Updates",
+                        		"More accurate and timely data on patient health behaviors",
+                        		"Better training and education to improve skills and provide better care",
+                        		"Improved patient outcomes & healthcare results"
+                        	),
+                        Arrays.asList(
+                        		"More engaging and enjoyable healthcare experience",
+                        		"Increased motivation & awareness for treatment",
+                        		"Improved understanding of health conditions and treatment options",
+                        		"Improved health outcomes and quality of life"
+                        	),
+                        Arrays.asList(
+                                "Improved training and education to improve skills and provide better care",
+                                "Increased motivation and engagement in the workplace",
+                                "Better tracking and monitoring of medical equipment and supplies",
+                                "Points & levels help them grow in their respective fields"
+                        	),
+                        Arrays.asList(
+                                "Improved tracking and monitoring of patient health behaviors and outcomes",
+                                "Improved efficiency and effectiveness of healthcare delivery",
+                                "Better allocation of resources based on patient needs",
+                                "Improved patient satisfaction and loyalty"
+                            ),
+                        Arrays.asList(
+                                "Enhanced Healthcare Experience for patients",
+                                "More efficient and effective healthcare delivery",
+                                "Improved staff training and education to improve skills and provide better care",
+                                "Improved tracking and monitoring of patient health behaviors and outcomes"
+                            )
+                    );
+
+                    verifyMultipleLists(driver, locators, expectedTextsLists);
+                    
+                    // Page Scrolling
+                    
+                    scrollToElementByXpath(driver, "//span[normalize-space()='Case Study']");
+                    
+                    // Case Study Section
+                    
+                    printSectionHeader("Case Study Section");
+                    
+                    checkImageVisibility(driver, "(//img[@class='attachment-large size-large wp-image-73563'])[1]");
+                    
+                    validateTitle(driver, "//span[normalize-space()='Case Study']", "Case Study", "Title");
+                    validateLink(driver, "(//a[@class='elementor-button elementor-button-link elementor-size-md'])[4]", "https://www.capermint.com/contact/", "Tata 1MG Button");
+                    validateTitle(driver, "//p[contains(text(),'One of the successfull gamification project of Cap')]", "One of the successfull gamification project of Capermint", "Content");
+                    
+                    checkImageVisibility(driver, "(//img[@class='attachment-large size-large wp-image-73563'])[2]");
+                    
+                    String[] CaseStudyNames = {
+                    	    "Objective",
+                    	    "Strategy",
+                    	    "Conclusion",
+                    	    "Implementation",
+                    	    "Results"
+                    	};
+                    
+                    String[] CaseStudyContents = {
+                    	    "The objective is to enhance user engagement and awareness while encouraging healthy habits among participants of 1MG’s Grand Saving Days Sale.",
+                    	    "1MG collaborated with Capermint to develop a gamification module for their campaign, with the aim of captivating Gen-Z and millennial users. The game’s objective was to encourage healthy lifestyle habits, promote awareness, and provide discounts and rewards for achieving high scores.",
+                    	    "A gamification is an effective approach to engaging users and enhancing the impact of marketing campaigns and healthcare applications. Capermint healthcare gamification services provide an opportunity to elevate your campaigns, offering superior gamification strategies that will captivate and inspire your users, creating an unparalleled healthcare app experience.",
+                    	    "From February 17 to 21, Tata1MG launched a game that allowed participants to win discount coupons, Apple iPads, and smartwatches. The game was designed to be both enjoyable and engaging, featuring interactive elements and challenges that encouraged healthy habits to sustain users’ interest.",
+                    	    "The campaign’s success was a collective effort, and all involved parties contributed to its achievement. Impressions surpassed 1 million, with over 250k link clicks and 30k gameplays, making it a tremendous achievement. Tata1MG brand was viewed positively by users, with the gamification approach, and played a significant role in driving this outcome. Incorporating incentivization and social sharing aspects into the game proved instrumental in expanding the campaign’s reach and influence."
+                    	};
+                    
+                    validateElements(driver, CaseStudyNames, CaseStudyContents, null, "Elements");
+                    
+                    checkImageVisibility(driver, "//img[@alt='Tata 1MG']");
+                    
+                    // Page Scrolling
+                    
+                    scrollToElementByXpath(driver, "//img[@class='attachment-large size-large wp-image-73640']");
+                    
+                    // Cost to Gamify a Healthcare App Section
+                    
+                    printSectionHeader("Cost to Gamify a Healthcare App Section");
+                    
+                    checkImageVisibility(driver, "//img[@class='attachment-large size-large wp-image-73640']");
+
+                    validateTitle(driver, "//h2[contains(text(),'How Much Does It Cost to')]", "How Much Does It Cost to Gamify an E-Commerce App?", "Title");
+                    validateTitle(driver, "//p[contains(text(),'Healthcare App Gamification can cost around $35,00')]", "Healthcare App Gamification can cost around $35,000 to $40,000 for a single platform with basic functionality. If you wish to add advanced gamification features and functionalities to your mobile app, with support for multiple platforms, it may cost up to $80,000.", "Text");
+                    
+                    checkImageVisibility(driver, "//img[@class='attachment-full size-full wp-image-73642']");
+                    validateTitle(driver, "//h3[normalize-space()='Charges of a small company']", "Charges of a small company", "Text1");
+                    validateTitle(driver, "(//p[@class='elementor-image-box-description'])[7]", " $15 - $40 / hour", "Price");
+                    
+                    checkImageVisibility(driver, "//img[@class='attachment-full size-full wp-image-73643']");
+                    validateTitle(driver, "//h3[normalize-space()='Charges of an Intermediate company']", "Charges of an Intermediate company", "Text1");
+                    validateTitle(driver, "(//p[@class='elementor-image-box-description'])[8]", "$50 - $100 / hour", "Price");
+                    
+                    checkImageVisibility(driver, "//img[@class='attachment-full size-full wp-image-73644']");
+                    validateTitle(driver, "//h3[normalize-space()='Charges of an Enterprise-level company']", "Charges of an Enterprise-level company", "Text1");
+                    validateTitle(driver, "(//p[@class='elementor-image-box-description'])[9]", "$100 - $300 / hour", "Price");
+                    
+                    validateTitle(driver, "//p[contains(text(),'If you are looking for an expert Healthcare Gamifi')]", "If you are looking for an expert Healthcare Gamification Company, you can contact us. We have solid technical gamification experts who can gamify and upgrade your app to provide the best user experience. Check out our portfolio to learn more about our Healthcare App Gamification Service. ", "Text");
+                    
+                    validateLink(driver, "(//a[@class='elementor-button elementor-button-link elementor-size-md'])[5]", "https://www.capermint.com/contact/", "Contact Button");
+                    
+                    printSectionHeader("Check Hover Effect");
+                    
+                    List<String> cardXpaths = Arrays.asList(
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[61]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[62]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[63]"
+                        );
+
+                        String expectedBorderColor1 = "rgb(22, 180, 230)";
+                        String expectedShadow1 = "rgba(61, 255, 255, 0.33) 0px 0px 50px 0px";
+
+                        for (String xpath : cardXpaths) {
+                            validateCardHighlightAnimation(driver, xpath, expectedBorderColor1, expectedShadow1);
+                        }
+                    
+                    // Page Scrolling
+                    
+                    scrollToElementByXpath(driver, "//img[@class='attachment-large size-large wp-image-73653']");
+                    
+                    // Why Capermint Section
+                    
+                    printSectionHeader("Why Capermint Section");
+                    
+                    checkImageVisibility(driver, "//img[@class='attachment-large size-large wp-image-73653']");
+                    
+                    validateTitle(driver, "//span[normalize-space()='Gamified Healthcare App']", "Why Choose Capermint As Your Gamified Healthcare App Development Company?", "Title");
+                    validateTitle(driver, "//p[contains(text(),'Capermint is a one-stop solution for all your mobi')]", "Capermint is a one-stop solution for all your mobile app and game development needs. Our Gamification experts will turn your Healthcare app into the most captivating and motivational one. Our Gamification service will bring endless engagement to your app and completely transform the in-app experience into a more personalized and captivating experience. Get a healthcare app that emphasizes motivating users and engagingly improving their health. Being an industry leader, we have developed numerous gamified Healthcare apps. Here are the benefits of working with Capermint for Gamification In Healthcare:", "Content");
+                    
+                    String[] ReasonNames = {
+                    		"Team of Experts",
+                    		"Service Backed With Detailed Analysis",
+                    		"Seamless Gamification Integration",
+                    		"Best-in-class Support & Maintenance",
+                    		"Cost-Effective Solutions",
+                    		"Transparent Communication"
+                    };
+                    
+                    String[] ReasonImages = {
+                    		"//img[@class='attachment-full size-full wp-image-73655']",
+                    		"//img[@class='attachment-full size-full wp-image-73656']",
+                    		"//img[@class='attachment-full size-full wp-image-73657']",
+                    		"//img[@class='attachment-full size-full wp-image-73667']",
+                    		"//img[@class='attachment-full size-full wp-image-73666']",
+                    		"//img[@class='attachment-full size-full wp-image-73665']"
+                    };
+                    
+                    validateElements(driver, ReasonNames, null, ReasonImages, "Reasons");
+                    
+                    printSectionHeader("Check Hover Effect");
+                    
+                    hoverOverElement(driver, "(//div[@class='elementor-widget-wrap elementor-element-populated'])[65]");
+                    Thread.sleep(2000);
+                    
+                    List<String> ReasoncardXpaths = Arrays.asList(
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[65]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[66]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[67]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[68]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[69]",
+                            "(//div[@class='elementor-widget-wrap elementor-element-populated'])[70]"
+                        );
+
+                        String expectedBorderColor2 = "rgb(22, 180, 230)";
+                        String expectedShadow2 = "rgba(61, 255, 255, 0.33) 0px 0px 50px 0px";
+
+                        for (String xpath : ReasoncardXpaths) {
+                            validateCardHighlightAnimation(driver, xpath, expectedBorderColor2, expectedShadow2);
+                        }
+                        
+                        // Page Scrolling
+                        
+                        scrollToElementByXpath(driver, "//img[@alt='Gamification in Healthcare']");
+                        
+                        // FAQ Section
+                        
+                        printSectionHeader("FAQ Section");
+                        
+                        checkImageVisibility(driver, "//img[@alt='Gamification in Healthcare']");
+                        validateTitle(driver, "//h2[contains(text(),'FAQs on')]", "FAQs on Gamification in Healthcare", "Title");
+                        
+                        List<String> faqQuestions = Arrays.asList(
+                        	    "What are the best practices for gamification in healthcare?",
+                        	    "How can healthcare providers incorporate gamification into their practice?",
+                        	    "How can I evaluate the effectiveness of gamification in healthcare?",
+                        	    "Are there any risks associated with gamification in healthcare?",
+                        	    "How does healthcare gamification work?"
+                        	);
+                        
+                        hoverOverFaqs(driver, faqQuestions);
                 
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
