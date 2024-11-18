@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 public class CommanMathods {
     protected static WebDriver driver;
@@ -38,26 +39,45 @@ public class CommanMathods {
         hoverActions.moveToElement(elementToHover).perform();
     }
     
-    public static void validateCardHighlightAnimation(WebDriver driver, String cardXpath, String expectedBorderColor, String expectedShadow) {
-        WebElement card = driver.findElement(By.xpath(cardXpath));
+    public static boolean validateHoverEffects(WebDriver driver, List<String> elementXPaths, Map<String, String> cssProperties) {
+        boolean allPassed = true;
         Actions actions = new Actions(driver);
-        actions.moveToElement(card).perform();
 
-        try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace(); }
+        for (String xpath : elementXPaths) {
+            WebElement element = driver.findElement(By.xpath(xpath));
 
-        String actualBorderColor = card.getCssValue("border-color");
-        String actualShadow = card.getCssValue("box-shadow");
+            try {
+                actions.moveToElement(element).perform();
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+                wait.until(ExpectedConditions.visibilityOf(element));
 
-        if (actualBorderColor.equals(expectedBorderColor)) {
-            System.out.println("Border color is correct upon hover.");
-        } else {
-            System.out.println("Border color is incorrect. Expected: " + expectedBorderColor + " but got: " + actualBorderColor);
+                for (Map.Entry<String, String> property : cssProperties.entrySet()) {
+                    String actualValue = element.getCssValue(property.getKey());
+                    String expectedValue = property.getValue();
+
+                    if (!actualValue.equals(expectedValue)) {
+                        System.out.println("Validation failed for element: " + xpath);
+                        System.out.println("CSS Property: " + property.getKey() +
+                                " | Expected: " + expectedValue + ", Found: " + actualValue);
+                        allPassed = false;
+                    } else {
+                        System.out.println("Validation passed for CSS Property: " + property.getKey() +
+                                " | Value: " + actualValue);
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Error occurred while validating element: " + xpath);
+                e.printStackTrace();
+                allPassed = false;
+            }
         }
-        if (actualShadow.contains(expectedShadow)) {
-            System.out.println("Box shadow effect is correct upon hover.");
+        if (allPassed) {
+            System.out.println("All hover effects are correctly applied.");
         } else {
-            System.out.println("Box shadow effect is incorrect. Expected to contain: " + expectedShadow + " but got: " + actualShadow);
+            System.out.println("Some hover effects failed validation.");
         }
+
+        return allPassed;
     }
     
     public static void hoverOverAllElements(WebDriver driver, List<String> xpaths) {
@@ -274,4 +294,68 @@ public class CommanMathods {
             ? "Counter is correct and displays: " + displayedValue 
             : "Counter is incorrect. Expected: " + expectedValue + ", but found: " + displayedValue);
     }
+    
+    public static void validateFlipAnimation(WebDriver driver, List<String> cardXpaths) {
+
+    try {
+        Actions actions = new Actions(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Loop through each card XPath
+        for (String cardXpath : cardXpaths) {
+            WebElement cardElement = driver.findElement(By.xpath(cardXpath));
+
+            // Capture the initial transform property (before hover)
+            String initialTransform = (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0]).getPropertyValue('transform');",
+                cardElement
+            );
+            System.out.println("Initial Transform for " + cardXpath + ": " + initialTransform);
+
+            // Hover over the card to trigger the animation
+            actions.moveToElement(cardElement).perform();
+
+            // Wait for the animation to complete (adjust time as needed)
+            Thread.sleep(1000);
+
+            // Capture the transform property after the hover animation
+            String afterTransform = (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0]).getPropertyValue('transform');",
+                cardElement
+            );
+            System.out.println("After Hover Transform for " + cardXpath + ": " + afterTransform);
+
+            // Validate if the transform property changed (indicating animation occurred)
+            if (!initialTransform.equals(afterTransform) && afterTransform.contains("matrix")) {
+                System.out.println("Flip card animation validated successfully for: " + cardXpath);
+            } else {
+                System.out.println("Flip card animation validation failed for: " + cardXpath);
+            }
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error during validation: " + e.getMessage());
+    }
+}
+
+    public static void validateMultipleFlipCardAnimations(WebDriver driver, List<String> frontSideXPaths, List<String> backSideXPaths, Duration waitTime) {
+        WebDriverWait wait = new WebDriverWait(driver, waitTime);
+
+        for (int i = 0; i < frontSideXPaths.size(); i++) {
+            WebElement frontSide = driver.findElement(By.xpath(frontSideXPaths.get(i)));
+            WebElement backSide = driver.findElement(By.xpath(backSideXPaths.get(i)));
+
+            assert frontSide.isDisplayed() : "Front side is not visible for card " + (i + 1);
+            assert !backSide.isDisplayed() : "Back side is visible before flip for card " + (i + 1);
+
+            hoverOverElement(driver, frontSideXPaths.get(i));
+
+            wait.until(ExpectedConditions.visibilityOf(backSide));
+
+            assert backSide.isDisplayed() : "Back side is not visible after flip for card " + (i + 1);
+            assert !frontSide.isDisplayed() : "Front side is still visible after flip for card " + (i + 1);
+
+            System.out.println("Flip card animation validated successfully for card " + (i + 1));
+        }
+    } 
 }

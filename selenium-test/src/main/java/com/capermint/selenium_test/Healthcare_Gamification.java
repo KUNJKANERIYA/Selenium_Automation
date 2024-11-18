@@ -2,7 +2,9 @@ package com.capermint.selenium_test;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -451,13 +453,12 @@ public class Healthcare_Gamification extends CommanMathods {
                             "(//div[@class='elementor-widget-wrap elementor-element-populated'])[62]",
                             "(//div[@class='elementor-widget-wrap elementor-element-populated'])[63]"
                         );
-
-                        String expectedBorderColor1 = "rgb(22, 180, 230)";
-                        String expectedShadow1 = "rgba(61, 255, 255, 0.33) 0px 0px 50px 0px";
-
-                        for (String xpath : cardXpaths) {
-                            validateCardHighlightAnimation(driver, xpath, expectedBorderColor1, expectedShadow1);
-                        }
+                    	
+                    Map<String, String> cssProperties = new HashMap<>();
+                    cssProperties.put("border-color", "rgb(22, 180, 230)");
+                    cssProperties.put("box-shadow", "rgba(61, 255, 255, 0.33) 0px 0px 50px 0px");
+    
+                    validateHoverEffects(driver, cardXpaths, cssProperties);
                     
                     // Page Scrolling
                     
@@ -506,33 +507,28 @@ public class Healthcare_Gamification extends CommanMathods {
                             "(//div[@class='elementor-widget-wrap elementor-element-populated'])[70]"
                         );
 
-                        String expectedBorderColor2 = "rgb(22, 180, 230)";
-                        String expectedShadow2 = "rgba(61, 255, 255, 0.33) 0px 0px 50px 0px";
-
-                        for (String xpath : ReasoncardXpaths) {
-                            validateCardHighlightAnimation(driver, xpath, expectedBorderColor2, expectedShadow2);
-                        }
+                    validateHoverEffects(driver, ReasoncardXpaths, cssProperties);
+                    
+                    // Page Scrolling
                         
-                        // Page Scrolling
+                    scrollToElementByXpath(driver, "//img[@alt='Gamification in Healthcare']");
                         
-                        scrollToElementByXpath(driver, "//img[@alt='Gamification in Healthcare']");
+                    // FAQ Section
                         
-                        // FAQ Section
+                    printSectionHeader("FAQ Section");
                         
-                        printSectionHeader("FAQ Section");
+                    checkImageVisibility(driver, "//img[@alt='Gamification in Healthcare']");
+                    validateTitle(driver, "//h2[contains(text(),'FAQs on')]", "FAQs on Gamification in Healthcare", "Title");
                         
-                        checkImageVisibility(driver, "//img[@alt='Gamification in Healthcare']");
-                        validateTitle(driver, "//h2[contains(text(),'FAQs on')]", "FAQs on Gamification in Healthcare", "Title");
+                    List<String> faqQuestions = Arrays.asList(
+                         "What are the best practices for gamification in healthcare?",
+                         "How can healthcare providers incorporate gamification into their practice?",
+                         "How can I evaluate the effectiveness of gamification in healthcare?",
+                         "Are there any risks associated with gamification in healthcare?",
+                         "How does healthcare gamification work?"
+                     );
                         
-                        List<String> faqQuestions = Arrays.asList(
-                        	    "What are the best practices for gamification in healthcare?",
-                        	    "How can healthcare providers incorporate gamification into their practice?",
-                        	    "How can I evaluate the effectiveness of gamification in healthcare?",
-                        	    "Are there any risks associated with gamification in healthcare?",
-                        	    "How does healthcare gamification work?"
-                        	);
-                        
-                        hoverOverFaqs(driver, faqQuestions);
+                    hoverOverFaqs(driver, faqQuestions);
                 
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());

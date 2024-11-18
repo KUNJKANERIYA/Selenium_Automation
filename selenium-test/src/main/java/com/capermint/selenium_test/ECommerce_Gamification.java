@@ -2,7 +2,10 @@ package com.capermint.selenium_test;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -91,14 +94,13 @@ public class ECommerce_Gamification extends CommanMathods{
                     "(//div[@class='elementor-widget-wrap elementor-element-populated'])[10]",
                     "(//div[@class='elementor-widget-wrap elementor-element-populated'])[11]"
                 );
-
-                String expectedBorderColor = "rgb(252, 24, 90)";
-                String expectedShadow = "rgba(255, 61, 61, 0.33) 0px 0px 50px 0px";
-
-                for (String xpath : cardXpaths) {
-                    validateCardHighlightAnimation(driver, xpath, expectedBorderColor, expectedShadow);
-                }
                 
+            Map<String, String> cssProperties = new HashMap<>();
+            cssProperties.put("border-color", "rgb(252, 24, 90)");
+            cssProperties.put("box-shadow", "rgba(255, 61, 61, 0.33) 0px 0px 50px 0px");
+
+            validateHoverEffects(driver, cardXpaths, cssProperties);
+
             printSectionHeader("Check section Content");
             
             String[] EasyGamificationNames = {
