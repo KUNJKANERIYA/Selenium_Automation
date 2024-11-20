@@ -200,9 +200,11 @@ public class CommanMathods {
 
         if ("certificate".equalsIgnoreCase(type)) {
             return String.format("//p[normalize-space()='%s']", name);
+        } else if ("Real Estate App Gamification".equals(name)) {
+            return String.format("//h4[normalize-space()='%s']", name);
         } else if (type.matches("(?i)Elements|Portfolio|Solutions|Gamification|Services|Real Estate Apps|EasyGamification|Features|Examples|Benefits")) {
             return String.format("//h3[normalize-space()='%s']", name);
-        } else if ("Process".equals(type) || "Advantages".equals(type)) {
+        } else if ("Process".equals(type) || "Advantages".equals(type) || "Reason".equals(type)) {
             return String.format("//h5[normalize-space()='%s']", name);
         } else {
             return String.format("//h4[normalize-space()='%s']", name);
