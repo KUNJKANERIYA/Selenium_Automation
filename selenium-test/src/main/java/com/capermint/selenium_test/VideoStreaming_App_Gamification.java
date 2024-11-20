@@ -187,6 +187,55 @@ public class VideoStreaming_App_Gamification extends CommanMathods{
         validateTitle(driver, "//h2[normalize-space()='What does Netflix offer in the Gaming Service?']", "What does Netflix offer in the Gaming Service?", "Title");
         validateTitle(driver, "//div[contains(text(),'Here are all the details of the revolutionary Netflix gaming')]", "Here are all the details of the revolutionary Netflix gaming", "Text");
         
+        String[] ServiceNames = {
+        	    "Free access to the Netflix Users",
+        	    "Mobile Games for Android and iOS Users",
+        	    "User Friendly Games",
+        	    "Games for every Netflix Profile",
+        	    "Child Lock",
+        	    "Games without internet"
+        	};
+
+        String[] ServiceContents = {
+        	    "To play the Netflix games, the users just need a Netflix subscription. There will be no additional fees, no ads, and no in-app purchase.",
+        	    "In the Netflix app, there will be a dedicated games row, the Android and iOS users can visit the same to select and download the games.",
+        	    "The games will be automatically adjusted to the default language setting of your profile. If your language is not available, the game will be available in English language.",
+        	    "The users can download the games from all the profiles that are available. If the profiles have hit the limit, the app will notify you.",
+        	    "The games are available only for the adult profiles, and are not available in the kids profile. If you have locked your profile with a pin, the same pin will be needed to access the profile and play games.",
+        	    "There are some Netflix games that can be played without internet connection, however, there are some games that require an internet connection."
+        	};
+        	
+        String[] ServiceImages = {
+        		"(//*[name()='path'])[1]",
+        		"(//*[name()='path'])[2]",
+        		"(//*[name()='path'])[3]",
+        		"(//*[name()='path'])[4]",
+        		"(//*[name()='path'])[5]",
+        		"(//*[name()='path'])[6]"
+            };
+        
+        validateElements(driver, ServiceNames, ServiceContents, ServiceImages, "Services");
+        
+        // New Section
+        
+        printSectionHeader("New Section");
+        
+        checkImageVisibility(driver, "//img[@class='attachment-full size-full wp-image-43135']");
+        
+        validateTitle(driver, "//h2[normalize-space()='What Games are available to play on Netflix?']", "What Games are available to play on Netflix?", "Title");
+        validateTitle(driver, "//div[contains(text(),'Netflix has launched 5 games for now. The company')]", "Netflix has launched 5 games for now. The company has plans to launch various other games in the coming year. The games that the users can enjoy now are:", "Content");
+        
+        By Locater = By.xpath("(//ul)[66]/li");
+        List<String> ExpectedList = Arrays.asList(
+        		"Stranger Things: 1984",
+        		"Stranger Things 3: The Game",
+        		"Teeter Up",
+        		"Card Blast",
+        		"Shooting Hoop",
+        		"Asphalt Xtreme"
+        	);
+        
+        verifyTextInList(driver, Locater, ExpectedList);
         
     } catch (Exception e) {
         System.out.println("An error occurred: " + e.getMessage());
