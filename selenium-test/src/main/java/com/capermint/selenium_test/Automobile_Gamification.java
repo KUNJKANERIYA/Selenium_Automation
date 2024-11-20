@@ -325,7 +325,7 @@ public class Automobile_Gamification extends CommanMathods{
             	    "What are the benefits of incorporating gamification into mobile apps?"
                 );
                    
-               hoverOverFaqs(driver, faqQuestions);
+            hoverOverFaqs(driver, faqQuestions);
             
     } catch (Exception e) {
         System.out.println("An error occurred: " + e.getMessage());

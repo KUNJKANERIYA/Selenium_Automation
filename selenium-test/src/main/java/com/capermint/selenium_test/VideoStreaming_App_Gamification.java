@@ -236,6 +236,136 @@ public class VideoStreaming_App_Gamification extends CommanMathods{
         	);
         
         verifyTextInList(driver, Locater, ExpectedList);
+
+        // Page scrolling
+        
+        scrollToElementByXpath(driver, "//h2[contains(text(),'How much does it cost to develop a video streaming')]");
+        
+        // Cost Section
+        
+        printSectionHeader("Cost Section");
+        
+        validateTitle(driver, "//h2[contains(text(),'How much does it cost to develop a video streaming')]", "How much does it cost to develop a video streaming app with exclusive games?", "Text");
+        validateTitle(driver, "//div[contains(text(),'Video Streaming app development with exclusive games')]", "Video Streaming app development with exclusive games can cost around $80,000 to $100,000 for a single platform with basic functionality. If you wish to develop an app with all the advanced features and functionalities, with support for multiple platforms, it may cost up to $500,000.", "Content");
+
+        validateTitle(driver, "//h2[normalize-space()='Our Video Streaming App Example']", "Our Video Streaming App Example", "Title");
+        
+        String frontSideXPath = "//h2[@class='ha-flip-box-heading']";
+        String backSideXPath = "//p[@class='ha-desc']";
+        Duration waitTime = Duration.ofSeconds(10);
+
+        validateSingleFlipCardAnimation(driver, frontSideXPath, backSideXPath, waitTime);
+        
+        // Page Scrolling
+        
+        scrollToElementByXpath(driver, "//h2[contains(text(),'Why is Capermint the best company for Video Stream')]");
+        
+        // New Section
+        
+        printSectionHeader("New Section");
+        
+        validateTitle(driver, "//h2[contains(text(),'Why is Capermint the best company for Video Stream')]", "Why is Capermint the best company for Video Streaming App Gamification?", "Title");
+        validateTitle(driver, "//p[contains(text(),'Capermint is your one stop destination for all Video Streaming App Development needs.')]", "Capermint is your one stop destination for all Video Streaming App Development needs. Whether you want to develop a video streaming app from scratch, or you want to upgrade your existing video streaming app with games section, our expert developers will help you with everything. Our developers can effectively turn all your ideas into a AAA quality game.\r\n"
+        		+ "\r\n"
+        		+ "\r\n"
+        		+ "Our special and customized game development process helps us in developing the most amazing games, within the timeline, and in pocket-friendly budgets. Our developers also have experience in working with advanced technologies like Artificial Intelligence, Machine Learning, Augmented Reality, and Virtual Reality, and therefore you can get the best game that is infused by these technologies developed by us.\r\n"
+        		+ "\r\n"
+        		+ "\r\n"
+        		+ "Here are some of the advantages of choosing Capermint as your Video Streaming app Gamification company", "Content");
+        
+        String[] BenefitsNames = {
+        	    "Multiplayer Game Development Specialist",
+        	    "Seamless gaming experience",
+        	    "Supports cross-platform",
+        	    "Expert 2D and 3D Game Developers",
+        	    "Attractive UI and UX",
+        	    "Experienced Real Money Game Developers"
+        	};
+
+        String[] BenefitsContents = {
+        	    "Our developers have years of experience in developing chartbuster multiplayer games.",
+        	    "Our games are designed to work seamlessly and effortlessly across all the devices and platforms.",
+        	    "Your game should get full exposure and therefore we develop games that support cross-platform functionality.",
+        	    "We have a team of expert 2D and 3D game developers who are experienced in developing the best 2D and 3D games.",
+        	    "To provide the best gaming experience, we develop the most attractive UI and UX that feel amazing and user-friendly at the same time.",
+        	    "We have the biggest portfolio in the industry when it comes to developing real money games for mobile devices."
+        	};
+        	
+        String[] BenefitsImages = {
+        		"//img[@alt='Multiplayer Game_App']",
+        		"//img[@alt='Seamless gaming experience']",
+        		"//img[@alt='Supports-cross-platform']",
+        		"//img[@alt='Expert 2D and 3D Game Developers']",
+        		"//img[@alt='Attractive UI and UX']",
+        		"//img[@alt='Experienced-Real-Money-Game-Developers']"
+            };
+        
+        validateElements(driver, BenefitsNames, BenefitsContents, BenefitsImages, "Benefits");
+        
+        // Page Scrolling
+        
+        scrollToElementByXpath(driver, "//h2[contains(text(),'Capermint Advantages for Video Streaming App with ')]");
+        
+        // Advantages Section
+        
+        printSectionHeader("Advantages Section");
+        
+        validateTitle(driver, "//h2[contains(text(),'Capermint Advantages for Video Streaming App with ')]", "Capermint Advantages for Video Streaming App with Exclusive Games Development", "Text");
+        validateTitle(driver, "//p[contains(text(),'Capermint is a leading Video Streaming App Develop')]", "Capermint is a leading Video Streaming App Development Company. We incorporate the latest features and functionalities in your app. Our team of expert developers use the most advanced and robust tools, technologies, and engines to develop the most trendy and effective apps and games for our clients.  Here are some advantages of Capermint Video Streaming App Development", "Content");
+        
+        String[] AdvantagesNames = {
+        	    "Seamless Performing App/Games",
+        	    "Substantial Development process",
+        	    "Detailed Analysis",
+        	    "Immense Experience",
+        	    "Transparent Communication",
+        	    "End to End Support",
+        	    "Cost-Effective Solutions",
+        	    "Scheduled Delivery"
+        	};
+
+        String[] AdvantagesContents = {
+        		"The work that we do defines us and we want to be defined as the best and therefore, all our apps and games work seamlessly across all devices. Apps and games developed by our android app developers and iOS app developers work effectively and never lag.",
+        	    "If we want 100% success, we should have a well-defined process and therefore we have come up with a substantial development process that helps us in developing the perfect product. It keeps us in a loop with the deliverables and helps us in delivering the product on time.",
+        	    "We are here to turn your idea into a real game, but to do so, we have to first prepare all the details of the game. And to do so, before we start developing the game, we perform a detailed analysis that helps us in developing the perfect mobile app/game for you.",
+        	    "With 7+ years of experience in the mobile game development industry, we know everything there is to know about mobile game development. Our mobile developers and designers have experience in developing games of all genres, and for all the available platforms.",
+        	    "As soon as we start your game development, we assign a dedicated project manager to keep you in the loop of everything that is happening around your game. You become a part of the development process and you are informed about even the minutest updates.",
+        	    "You just have to share your idea, the rest lies to us. From planning, design, development, deployment, testing, launching to after services, we will take care of it all. Our developers use the latest technologies to deliver games that your users will fall in love with.",
+        	    "We understand the cut-throat competition that prevails in the market and therefore we have kept our pricing policy highly flexible that can fit every budget. You do not have to worry about the budget, that burden is ours. Just share your idea and the budget, the rest lies to us.",
+        	    "As we follow the agile approach for Android game development and iOS game development, you don’t have to worry if you will receive your product on time or not. Having a team of expert developers is a really great asset that contributes towards the delivery of the product."
+        	};
+        	
+        String[] AdvantagesImages = {
+        		"//img[@alt='Seamless Performing Apps']",
+        		"//img[@alt='Substantial Development process']",
+        		"//img[@alt='Detailed Analysis']",
+        		"//img[@alt='Immense Experience']",
+        		"//img[@alt='Transparent Communication']",
+        		"//img[@alt='End to End Support']",
+        		"//img[@alt='cost-effective']",
+        		"//img[@alt='scheduled-delivery']"
+            };
+        
+        validateElements(driver, AdvantagesNames, AdvantagesContents, AdvantagesImages, "Advantage");
+        
+        // Page Scrolling
+        
+        scrollToElementByXpath(driver, "//h2[normalize-space()='FAQs about Video Streaming App Gamification']");
+        
+        // FAQ Section
+        
+        printSectionHeader("FAQ Section");
+        
+        validateTitle(driver, "//h2[normalize-space()='FAQs about Video Streaming App Gamification']", "FAQs about Video Streaming App Gamification", "Title");
+        
+        List<String> faqQuestions = Arrays.asList(
+        	    "What is gamification in OTT platforms?",
+        	    "How does gamification work in OTT platforms?",
+        	    "Can gamification contribute to the success of original content on OTT platforms?",
+        	    "What are the advantages of Gamification in Video Streaming Apps?"
+            );
+               
+        hoverOverFaqs(driver, faqQuestions);
         
     } catch (Exception e) {
         System.out.println("An error occurred: " + e.getMessage());

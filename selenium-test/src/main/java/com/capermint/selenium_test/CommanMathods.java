@@ -26,6 +26,23 @@ public class CommanMathods {
     public static void scrollToElement(WebDriver driver, WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+    
+    public static void checkBackgroundColor(WebDriver driver, String xpath, String expectedColor) {
+        try {
+        	String actualColor = driver.findElement(By.xpath(xpath)).getCssValue("background-color");
+            System.out.println("Actual background color: " + actualColor);
+
+            if (actualColor.equals(expectedColor)) {
+                System.out.println("Background color matches the expected color: " + expectedColor);
+            } else {
+                System.out.println("Background color mismatch! Expected: " + expectedColor + ", Actual: " + actualColor);
+                throw new AssertionError("Background color does not match!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while validating background color for element with XPath: " + xpath);
+            e.printStackTrace();
+        }
+    }
 
     public static void scrollToElementByXpath(WebDriver driver, String xpath) throws InterruptedException {
         WebElement element = findElementByXpath(driver, xpath);
@@ -297,48 +314,24 @@ public class CommanMathods {
             : "Counter is incorrect. Expected: " + expectedValue + ", but found: " + displayedValue);
     }
     
-    public static void validateFlipAnimation(WebDriver driver, List<String> cardXpaths) {
+    public static void validateSingleFlipCardAnimation(WebDriver driver, String frontSideXPath, String backSideXPath, Duration waitTime) {
+        WebDriverWait wait = new WebDriverWait(driver, waitTime);
 
-    try {
-        Actions actions = new Actions(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement frontSide = driver.findElement(By.xpath(frontSideXPath));
+        WebElement backSide = driver.findElement(By.xpath(backSideXPath));
 
-        // Loop through each card XPath
-        for (String cardXpath : cardXpaths) {
-            WebElement cardElement = driver.findElement(By.xpath(cardXpath));
+        assert frontSide.isDisplayed() : "Front side is not visible before flip";
+        assert !backSide.isDisplayed() : "Back side is visible before flip";
 
-            // Capture the initial transform property (before hover)
-            String initialTransform = (String) js.executeScript(
-                "return window.getComputedStyle(arguments[0]).getPropertyValue('transform');",
-                cardElement
-            );
-            System.out.println("Initial Transform for " + cardXpath + ": " + initialTransform);
+        hoverOverElement(driver, frontSideXPath);
 
-            // Hover over the card to trigger the animation
-            actions.moveToElement(cardElement).perform();
+        wait.until(ExpectedConditions.visibilityOf(backSide));
 
-            // Wait for the animation to complete (adjust time as needed)
-            Thread.sleep(1000);
+        assert backSide.isDisplayed() : "Back side is not visible after flip";
+        assert !frontSide.isDisplayed() : "Front side is still visible after flip";
 
-            // Capture the transform property after the hover animation
-            String afterTransform = (String) js.executeScript(
-                "return window.getComputedStyle(arguments[0]).getPropertyValue('transform');",
-                cardElement
-            );
-            System.out.println("After Hover Transform for " + cardXpath + ": " + afterTransform);
-
-            // Validate if the transform property changed (indicating animation occurred)
-            if (!initialTransform.equals(afterTransform) && afterTransform.contains("matrix")) {
-                System.out.println("Flip card animation validated successfully for: " + cardXpath);
-            } else {
-                System.out.println("Flip card animation validation failed for: " + cardXpath);
-            }
-        }
-
-    } catch (Exception e) {
-        System.out.println("Error during validation: " + e.getMessage());
+        System.out.println("Flip card animation validated successfully.");
     }
-}
 
     public static void validateMultipleFlipCardAnimations(WebDriver driver, List<String> frontSideXPaths, List<String> backSideXPaths, Duration waitTime) {
         WebDriverWait wait = new WebDriverWait(driver, waitTime);
