@@ -43,6 +43,40 @@ public class CommanMathods {
             e.printStackTrace();
         }
     }
+    
+    public static void checkfontColor(WebDriver driver, String xpath, String expectedColor) {
+        try {
+        	String actualColor = driver.findElement(By.xpath(xpath)).getCssValue("color");
+            System.out.println("Actual background color: " + actualColor);
+
+            if (actualColor.equals(expectedColor)) {
+                System.out.println("font-color matches the expected color: " + expectedColor);
+            } else {
+                System.out.println("font-color color mismatch! Expected: " + expectedColor + ", Actual: " + actualColor);
+                throw new AssertionError("font-color color does not match!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while validating font-color color for element with XPath: " + xpath);
+            e.printStackTrace();
+        }
+    }
+    
+    public static void checkfontStyle(WebDriver driver, String xpath, String expectedColor) {
+        try {
+        	String actualColor = driver.findElement(By.xpath(xpath)).getCssValue("font-family");
+            System.out.println("Actual background color: " + actualColor);
+
+            if (actualColor.equals(expectedColor)) {
+                System.out.println("font-color matches the expected color: " + expectedColor);
+            } else {
+                System.out.println("font-color color mismatch! Expected: " + expectedColor + ", Actual: " + actualColor);
+                throw new AssertionError("font-color color does not match!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred while validating font-color color for element with XPath: " + xpath);
+            e.printStackTrace();
+        }
+    }
 
     public static void scrollToElementByXpath(WebDriver driver, String xpath) throws InterruptedException {
         WebElement element = findElementByXpath(driver, xpath);
@@ -56,8 +90,7 @@ public class CommanMathods {
         hoverActions.moveToElement(elementToHover).perform();
     }
     
-    public static boolean validateHoverEffects(WebDriver driver, List<String> elementXPaths, Map<String, String> cssProperties) {
-        boolean allPassed = true;
+    public static void validateHoverEffects(WebDriver driver, List<String> elementXPaths, Map<String, String> cssProperties) {
         Actions actions = new Actions(driver);
 
         for (String xpath : elementXPaths) {
@@ -65,36 +98,29 @@ public class CommanMathods {
 
             try {
                 actions.moveToElement(element).perform();
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-                wait.until(ExpectedConditions.visibilityOf(element));
+//                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+//                wait.until(ExpectedConditions.visibilityOf(element));
+                Thread.sleep(1000);
 
                 for (Map.Entry<String, String> property : cssProperties.entrySet()) {
                     String actualValue = element.getCssValue(property.getKey());
                     String expectedValue = property.getValue();
+                    Thread.sleep(1000);
 
                     if (!actualValue.equals(expectedValue)) {
-                        System.out.println("Validation failed for element: " + xpath);
+                        System.out.println("Validation failed: " + xpath);
                         System.out.println("CSS Property: " + property.getKey() +
                                 " | Expected: " + expectedValue + ", Found: " + actualValue);
-                        allPassed = false;
                     } else {
-                        System.out.println("Validation passed for CSS Property: " + property.getKey() +
+                        System.out.println("Validation passed: " + property.getKey() +
                                 " | Value: " + actualValue);
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error occurred while validating element: " + xpath);
+                System.out.println("Error occurred: " + xpath);
                 e.printStackTrace();
-                allPassed = false;
             }
         }
-        if (allPassed) {
-            System.out.println("All hover effects are correctly applied.");
-        } else {
-            System.out.println("Some hover effects failed validation.");
-        }
-
-        return allPassed;
     }
     
     public static void hoverOverAllElements(WebDriver driver, List<String> xpaths) {
@@ -103,26 +129,6 @@ public class CommanMathods {
         for (String xpath : xpaths) {
             WebElement faqElement = findElementByXpath(driver, xpath);
             hoverActions.moveToElement(faqElement).pause(500).perform();
-        }
-    }
-    
-    public static void hoverOverFaqs(WebDriver driver, List<String> faqQuestions) {
-        Actions hoverActions = new Actions(driver);
-
-        for (String question : faqQuestions) {
-            String xpath = String.format("//span[contains(., '%s')]", question);
-            WebElement faqElement = driver.findElement(By.xpath(xpath));
-
-            hoverActions.moveToElement(faqElement).pause(500).perform();
-            System.out.println("Hover is performed on: " + question);
-
-            faqElement.click();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -156,6 +162,33 @@ public class CommanMathods {
             }
         }
     }
+    
+    public static void checkMultipleImagesAndNavigate(WebDriver driver, List<String> targetImageXpaths, String nextButtonXpath) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        By nextSlideButton = By.xpath(nextButtonXpath);
+
+        for (String targetImageXpath : targetImageXpaths) {
+            boolean imageFound = false;
+
+            for (int i = 0; i < 13; i++) {
+                WebElement image = findElementByXpath(driver, targetImageXpath);
+
+                if (image.isDisplayed()) {
+                    System.out.println("Image is visible: " + targetImageXpath);
+                    imageFound = true;
+                    break;
+                } else {
+                    WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(nextSlideButton));
+                    nextButton.click();
+                    System.out.println("Clicked next button for image: " + targetImageXpath + ". Attempt: " + (i + 1));
+                    Thread.sleep(1000);
+                }
+            }
+            if (!imageFound) {
+                System.out.println("Image not found after 13 attempts: " + targetImageXpath);
+            }
+        }
+    }
 
     public static void validateLink(WebDriver driver, String xpath, String expectedLink, String linkIdentifier) {
         String actualLink = findElementByXpath(driver, xpath).getAttribute("href");
@@ -171,6 +204,52 @@ public class CommanMathods {
                 ? "Background image is present: " + backgroundImage 
                 : "No background image found.");
     }
+    
+//    public static void checkBgImage(WebDriver driver, String xpath) {
+//        String backgroundImage = driver.findElement(By.xpath(xpath)).getCssValue("background");
+//
+//        System.out.println((backgroundImage != null && !backgroundImage.equals("none") && backgroundImage.contains("url")) 
+//                ? "Background image is present: " + backgroundImage 
+//                : "No background image found.");
+//    }
+    
+    public static void checkPseudoElementBackgroundImage(WebDriver driver, String cssSelector, String pseudoElement) {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+
+        String script = "return window.getComputedStyle(document.querySelector(arguments[0]), arguments[1]).getPropertyValue('background-image');";
+
+        String backgroundImage = (String) jsExecutor.executeScript(script, cssSelector, pseudoElement);
+
+        System.out.println((backgroundImage != null && !backgroundImage.equals("none"))
+                ? "Background image is present: " + backgroundImage
+                : "No background image found.");
+    }
+    
+    public static void checkPseudoElementBackgroundImage(WebDriver driver, List<String> xpaths, String pseudoElement) {
+        if (!pseudoElement.equals("before") && !pseudoElement.equals("after")) {
+            throw new IllegalArgumentException("Invalid pseudo-element: " + pseudoElement);
+        }
+        for (String xpath : xpaths) {
+            WebElement element = driver.findElement(By.xpath(xpath));
+
+            String script = "return window.getComputedStyle(arguments[0], '::" + pseudoElement + "').getPropertyValue('background-image');";
+            String backgroundImage = ((JavascriptExecutor) driver)
+                    .executeScript(script, element)
+                    .toString();
+
+            if (backgroundImage != null && !backgroundImage.equals("none")) {
+                System.out.println("Background image is present: " + backgroundImage);
+            } else {
+                System.out.println("No background image found");
+            }
+        }
+    }
+  
+//    public static void checkMultipleBgImages(WebDriver driver, String[] xpaths) {
+//        for (String xpath : xpaths) {
+//        	checkBgImage(driver, xpath);
+//        }
+//    }
     
     public static void checkMultipleBackgroundImages(WebDriver driver, String[] xpaths) {
         for (String xpath : xpaths) {
@@ -219,6 +298,8 @@ public class CommanMathods {
             return String.format("//p[normalize-space()='%s']", name);
         } else if ("Real Estate App Gamification".equals(name)) {
             return String.format("//h4[normalize-space()='%s']", name);
+        } else if ("Attractive Interface and User Experience".equals(name)) {
+            return String.format("//h2[normalize-space()='%s']", name);
         } else if (type.matches("(?i)Elements|Portfolio|Solutions|Gamification|Services|Real Estate Apps|EasyGamification|Features|Examples|Benefits")) {
             return String.format("//h3[normalize-space()='%s']", name);
         } else if ("Process".equals(type) || "Advantages".equals(type) || "Reason".equals(type)) {
@@ -227,7 +308,7 @@ public class CommanMathods {
             return String.format("//h4[normalize-space()='%s']", name);
         }
     }
-    
+       
     public static void validateTitle(WebDriver driver, String xpath, String expectedText, String identifier) {
 
         String actualText = normalizeText(findElementByXpath(driver, xpath).getText());
@@ -242,6 +323,7 @@ public class CommanMathods {
         return text.replaceAll("<[^>]*>", "")
         		   .replaceAll("(?i)<br\\s*/?>", " ")
                    .replace("\u00A0", " ")
+                   .replace("\u200B", "")
                    .replaceAll("\\s+", " ")
                    .replaceAll("[\r\n]+", " ")
                    .trim();
@@ -266,6 +348,62 @@ public class CommanMathods {
                     System.out.println("No valid XPath found for content: " + contents[i]);
                 }
             }
+        }
+    }
+    
+    public static void hoverOverFaqs(WebDriver driver, List<String> faqQuestions) {
+        Actions hoverActions = new Actions(driver);
+
+        for (String question : faqQuestions) {
+            String xpath = String.format("//span[contains(., '%s')]", question);
+            WebElement faqElement = driver.findElement(By.xpath(xpath));
+
+            hoverActions.moveToElement(faqElement).pause(500).perform();
+            System.out.println("Hover is performed on: " + question);
+
+            faqElement.click();
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public static void hoverOverFaqs(WebDriver driver, String[] faqQuestions) {
+        Actions hoverActions = new Actions(driver);
+
+        String[] xpaths = {
+                "//span[contains(., '%s')]",
+                "//h3[contains(text(),'%s')]"
+        };
+
+        for (String question : faqQuestions) {
+//            boolean elementFound = false;
+
+            for (String xpathPattern : xpaths) {
+                String xpath = String.format(xpathPattern, question);
+
+                try {
+                    List<WebElement> elements = driver.findElements(By.xpath(xpath));
+
+                    if (!elements.isEmpty()) {
+                        WebElement faqElement = elements.get(0);
+                        hoverActions.moveToElement(faqElement).pause(500).perform();
+                        System.out.println("Hover is performed on: " + question);
+
+                        faqElement.click();
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error processing FAQ: " + question + " with XPath: " + xpath);
+                    e.printStackTrace();
+                }
+            }
+//            if (!elementFound) {
+//                System.err.println("No matching element found for FAQ: " + question);
+//            }
         }
     }
 

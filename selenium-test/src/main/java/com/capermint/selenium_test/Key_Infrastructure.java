@@ -1,6 +1,8 @@
 package com.capermint.selenium_test;
 
 import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -77,20 +79,26 @@ public class Key_Infrastructure extends CommanMathods{
 	            validateTitle(driver, "//p[contains(text(),'Capermint Technologies understand the importance o')]", "Capermint Technologies understand the importance of technology and infrastructure when it comes to app development service. Therefore, Capermint has incorporated the world’s finest and technologically advanced, robust premises to provide the team with an environment that they can use to develop world-class apps.", "Architecture Text2");
 	            
 	            scrollToElementByXpath(driver, "//p[contains(text(),'The workplace should be such that motivates a pers')]");
+	            
+	            List<String> imageXpaths = List.of(
+	            	    "(//img[@alt='Capermint Office Image 01'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 02'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 03'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 04'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 05'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 06'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 07'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 08'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 09'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 10'])[1]",
+	            	    "(//img[@alt='Capermint Office Image 11'])[2]",
+	            	    "(//img[@alt='Capermint Office Image 12'])[2]",
+	            	    "(//img[@alt='Capermint Office Image 13'])[2]"
+	            	);
 
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 01'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 02'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 03'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 04'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 05'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 06'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 07'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 08'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 09'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 10'])[1]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 11'])[2]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 12'])[2]", "(//button[@aria-label='slick-next'])[1]");
-	            checkImageAndNavigate(driver, "(//img[@alt='Capermint Office Image 13'])[2]", "(//button[@aria-label='slick-next'])[1]");
+	            	String nextButtonXpath = "(//button[@aria-label='slick-next'])[1]";
+
+	            	checkMultipleImagesAndNavigate(driver, imageXpaths, nextButtonXpath);
 	            
 	            // Page scroll
 	            
