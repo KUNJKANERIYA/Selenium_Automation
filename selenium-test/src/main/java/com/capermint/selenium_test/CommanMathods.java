@@ -296,7 +296,7 @@ public class CommanMathods {
 
         if ("certificate".equalsIgnoreCase(type)) {
             return String.format("//p[normalize-space()='%s']", name);
-        } else if ("Real Estate App Gamification".equals(name)) {
+        } else if ("Real Estate App Gamification".equals(name) || "New".equals(type)) {
             return String.format("//h4[normalize-space()='%s']", name);
         } else if ("Attractive Interface and User Experience".equals(name)) {
             return String.format("//h2[normalize-space()='%s']", name);
