@@ -491,4 +491,34 @@ public class CommanMathods {
             System.out.println("Flip card animation validated successfully for card " + (i + 1));
         }
     } 
+    
+    public static void validateVideo(WebDriver driver, String videoXpath) {
+        try {
+            WebElement videoElement = driver.findElement(By.xpath(videoXpath));
+
+            if (videoElement.isDisplayed()) {
+                System.out.println("Video element is displayed.");
+            } else {
+                System.out.println("Video element is not displayed.");
+            }
+
+            String videoSrc = videoElement.getAttribute("src");
+            if (videoSrc != null && !videoSrc.isEmpty()) {
+                System.out.println("Video source is valid: " + videoSrc);
+            } else {
+                System.out.println("Video source is invalid or missing.");
+            }
+
+            String playButtonXpath = videoXpath + "/following-sibling::div[@class='elementor-custom-embed-image-overlay']//div[@class='elementor-custom-embed-play']";
+            WebElement playButton = driver.findElement(By.xpath(playButtonXpath));
+            if (playButton.isDisplayed()) {
+            	playButton.click();
+            } else {
+                System.out.println("Play button is not displayed.");
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Video element or its attributes are missing: " + e.getMessage());
+        }
+    }
+    
 }
