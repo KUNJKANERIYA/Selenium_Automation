@@ -60,8 +60,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep1Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[1]");
-            scrollToElement(driver, ScrollToStep1Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[1]");
             
             // Step 1 Section
             
@@ -88,8 +87,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep2Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[2]");
-            scrollToElement(driver, ScrollToStep2Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[2]");
             
             // Step 2 Section
             
@@ -114,8 +112,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep3Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[3]");
-            scrollToElement(driver, ScrollToStep3Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[3]");
             
             // Step 3 Section
             
@@ -141,8 +138,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep4Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[4]");
-            scrollToElement(driver, ScrollToStep4Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[4]");
             
             // Step 4 Section
             
@@ -166,8 +162,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep5Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[5]");
-            scrollToElement(driver, ScrollToStep5Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[5]");
             
             // Step 5 Section
             
@@ -196,8 +191,7 @@ public class OurProcess extends CommanMathods{
             
             // Page Scroll
             
-            WebElement ScrollToStep6Section = findElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[5]");
-            scrollToElement(driver, ScrollToStep6Section);
+            scrollToElementByXpath(driver, "(//h5[normalize-space()='What We Cover'])[5]");
             
             // Step 6 Section
             
@@ -222,8 +216,7 @@ public class OurProcess extends CommanMathods{
             
             // page scrolling
             
-            WebElement ScrollToLastSection = findElementByXpath(driver, "//h2[@class='elementor-heading-title elementor-size-default']");
-            scrollToElement(driver, ScrollToLastSection);
+            scrollToElementByXpath(driver, "//h2[@class='elementor-heading-title elementor-size-default']");
             
             // Last Section
             

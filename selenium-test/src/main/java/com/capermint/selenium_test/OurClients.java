@@ -55,8 +55,7 @@ public class OurClients extends CommanMathods{
             
             // Page Scrolling
             
-            WebElement ScrollToAboutCustomerSection = findElementByXpath(driver, "//h2[normalize-space()='We Help 650+ Customers Worldwide']");
-            scrollToElement(driver, ScrollToAboutCustomerSection);
+            scrollToElementByXpath(driver, "//h2[normalize-space()='We Help 650+ Customers Worldwide']");
             
             // About Customers Section
             

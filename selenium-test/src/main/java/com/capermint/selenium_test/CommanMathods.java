@@ -22,9 +22,14 @@ public class CommanMathods {
     public static WebElement findElementByXpath(WebDriver driver, String xpath) {
         return driver.findElement(By.xpath(xpath));
     }
-
-    public static void scrollToElement(WebDriver driver, WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    
+    public static void scrollToElementByXpath(WebDriver driver, String xpath) {
+        try {
+            WebElement element = driver.findElement(By.xpath(xpath));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", element);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     public static void checkBackgroundColor(WebDriver driver, String xpath, String expectedColor) {
@@ -78,12 +83,6 @@ public class CommanMathods {
         }
     }
 
-    public static void scrollToElementByXpath(WebDriver driver, String xpath) throws InterruptedException {
-        WebElement element = findElementByXpath(driver, xpath);
-        scrollToElement(driver, element);
-        Thread.sleep(3000);
-    }
-    
     public static void hoverOverElement(WebDriver driver, String xpath) {
         Actions hoverActions = new Actions(driver);
         WebElement elementToHover = findElementByXpath(driver, xpath);
@@ -95,11 +94,8 @@ public class CommanMathods {
 
         for (String xpath : elementXPaths) {
             WebElement element = driver.findElement(By.xpath(xpath));
-
             try {
                 actions.moveToElement(element).perform();
-//                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-//                wait.until(ExpectedConditions.visibilityOf(element));
                 Thread.sleep(1000);
 
                 for (Map.Entry<String, String> property : cssProperties.entrySet()) {
@@ -134,7 +130,7 @@ public class CommanMathods {
 
     public static void checkImageVisibility(WebDriver driver, String xpath) {
         WebElement element = findElementByXpath(driver, xpath);
-        System.out.println("Image is " + (element.isDisplayed() ? "visible" : "NOT visible") + ".");
+        System.out.println("Image is " + (element.isDisplayed() ? "visible" : "NOT visible"));
     }
 
     public static void checkMultipleImagesVisibility(WebDriver driver, String[] xpaths) {
@@ -205,19 +201,10 @@ public class CommanMathods {
                 : "No background image found.");
     }
     
-//    public static void checkBgImage(WebDriver driver, String xpath) {
-//        String backgroundImage = driver.findElement(By.xpath(xpath)).getCssValue("background");
-//
-//        System.out.println((backgroundImage != null && !backgroundImage.equals("none") && backgroundImage.contains("url")) 
-//                ? "Background image is present: " + backgroundImage 
-//                : "No background image found.");
-//    }
-    
     public static void checkPseudoElementBackgroundImage(WebDriver driver, String cssSelector, String pseudoElement) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 
         String script = "return window.getComputedStyle(document.querySelector(arguments[0]), arguments[1]).getPropertyValue('background-image');";
-
         String backgroundImage = (String) jsExecutor.executeScript(script, cssSelector, pseudoElement);
 
         System.out.println((backgroundImage != null && !backgroundImage.equals("none"))
@@ -244,12 +231,6 @@ public class CommanMathods {
             }
         }
     }
-  
-//    public static void checkMultipleBgImages(WebDriver driver, String[] xpaths) {
-//        for (String xpath : xpaths) {
-//        	checkBgImage(driver, xpath);
-//        }
-//    }
     
     public static void checkMultipleBackgroundImages(WebDriver driver, String[] xpaths) {
         for (String xpath : xpaths) {
@@ -262,7 +243,6 @@ public class CommanMathods {
         if (listItems.size() != expectedTexts.size()) {
             throw new AssertionError("Number of list items does not match expected count.");
         }
-
         for (String expectedText : expectedTexts) {
             boolean found = listItems.stream().anyMatch(item -> item.getText().trim().equals(expectedText));
             if (!found) {
@@ -276,11 +256,9 @@ public class CommanMathods {
         if (locators.size() != expectedTextsLists.size()) {
             throw new IllegalArgumentException("The number of locators and expected text lists must match.");
         }
-
         for (int i = 0; i < locators.size(); i++) {
             By locator = locators.get(i);
             List<String> expectedTexts = expectedTextsLists.get(i);
-
             try {
                 verifyTextInList(driver, locator, expectedTexts);
             } catch (AssertionError e) {
@@ -291,24 +269,32 @@ public class CommanMathods {
         System.out.println("All lists validated successfully.");
     }
 
+    private static String buildNameXpath(WebDriver driver, String type, String name) {
 
-    private static String buildNameXpath(String type, String name) {
-
-        if ("certificate".equalsIgnoreCase(type)) {
-            return String.format("//p[normalize-space()='%s']", name);
-        } else if ("Real Estate App Gamification".equals(name) || "New".equals(type)) {
-            return String.format("//h4[normalize-space()='%s']", name);
-        } else if ("Attractive Interface and User Experience".equals(name)) {
-            return String.format("//h2[normalize-space()='%s']", name);
-        } else if (type.matches("(?i)Elements|Portfolio|Solutions|Gamification|Services|Real Estate Apps|EasyGamification|Features|Examples|Benefits")) {
-            return String.format("//h3[normalize-space()='%s']", name);
-        } else if ("Process".equals(type) || "Advantages".equals(type) || "Reason".equals(type)) {
-            return String.format("//h5[normalize-space()='%s']", name);
-        } else {
-            return String.format("//h4[normalize-space()='%s']", name);
+        String[] xpaths = {
+            String.format("//p[normalize-space()='%s']", name),
+            String.format("//h4[normalize-space()='%s']", name),
+            String.format("//span[contains(text(),'%s')]", name),
+            String.format("//h2[normalize-space()='%s']", name),
+            String.format("//h3[normalize-space()='%s']", name),
+            String.format("//h5[normalize-space()='%s']", name),
+            String.format("//div[contains(text(),'%s')]", name),
+            String.format("//p[contains(.,'%s')]", name),
+            String.format("//p[contains(normalize-space(text()),'%s')]", name)
+        };
+        for (String xpath : xpaths) {
+            try {
+                if (driver.findElements(By.xpath(xpath)).size() > 0) {
+                    return xpath;
+                }
+            } catch (Exception e) {
+                // Log the exception if needed or continue with the next XPath
+                // Optionally, log the exception for debugging
+            }
         }
+        return null;
     }
-       
+     
     public static void validateTitle(WebDriver driver, String xpath, String expectedText, String identifier) {
 
         String actualText = normalizeText(findElementByXpath(driver, xpath).getText());
@@ -336,8 +322,7 @@ public class CommanMathods {
             if (imageXpaths != null && imageXpaths.length > 0) {
                 checkImageVisibility(driver, imageXpaths[i]);
             }
-
-            String nameXpath = buildNameXpath(type, names[i]);
+            String nameXpath = buildNameXpath(driver, type, names[i]);
             validateTitle(driver, nameXpath, names[i], names[i]);
 
             if (contents != null && contents.length > 0 && contents[i] != null) {
@@ -362,7 +347,6 @@ public class CommanMathods {
             System.out.println("Hover is performed on: " + question);
 
             faqElement.click();
-
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -378,13 +362,10 @@ public class CommanMathods {
                 "//span[contains(., '%s')]",
                 "//h3[contains(text(),'%s')]"
         };
-
         for (String question : faqQuestions) {
-//            boolean elementFound = false;
 
             for (String xpathPattern : xpaths) {
                 String xpath = String.format(xpathPattern, question);
-
                 try {
                     List<WebElement> elements = driver.findElements(By.xpath(xpath));
 
@@ -401,9 +382,6 @@ public class CommanMathods {
                     e.printStackTrace();
                 }
             }
-//            if (!elementFound) {
-//                System.err.println("No matching element found for FAQ: " + question);
-//            }
         }
     }
 
@@ -518,6 +496,35 @@ public class CommanMathods {
             }
         } catch (NoSuchElementException e) {
             System.out.println("Video element or its attributes are missing: " + e.getMessage());
+        }
+    }
+    
+    public static void scrapeReviews(WebDriver driver, int swipeCount, int swipeOffset) throws InterruptedException {
+        Actions actions = new Actions(driver);
+
+        WebElement reviewsContainer = driver.findElement(By.cssSelector(".crumina-testimonial-item"));
+        for (int i = 0; i < swipeCount; i++) {
+            actions.clickAndHold(reviewsContainer)
+                   .moveByOffset(-swipeOffset, 0)
+                   .release()
+                   .perform();
+            Thread.sleep(1000);
+            
+            List<WebElement> reviews = driver.findElements(By.cssSelector(".crumina-testimonial-item"));
+            for (WebElement review : reviews) {
+                String testimonialText = review.findElement(By.className("testimonial-text")).getText();
+                String authorName = review.findElement(By.className("author-name")).getText();
+                String authorCompany = review.findElement(By.className("author-company")).getText();
+                WebElement authorImage = review.findElement(By.className("testimonial-img-author"));
+
+                if (!testimonialText.isEmpty() && !authorName.isEmpty() && authorImage.isDisplayed()) {
+                    System.out.println("Review: " + testimonialText);
+                    System.out.println("Author: " + authorName + 
+                                       (authorCompany.isEmpty() ? "" : ", " + authorCompany));
+                    System.out.println("--------------------------------------------------");
+                    System.out.println("Image is Visible");
+                }
+            }
         }
     }
     

@@ -56,8 +56,7 @@ public class EngagementModel extends CommanMathods{
             
             // Page Scrolling
             
-            WebElement ScrollToSection1 = findElementByXpath(driver, "//img[@alt='Hire-a-Developer-Model']");
-            scrollToElement(driver, ScrollToSection1);
+            scrollToElementByXpath(driver, "//img[@alt='Hire-a-Developer-Model']");
             Thread.sleep(3000);
             
             // Hire a Developer Model Section
@@ -71,8 +70,7 @@ public class EngagementModel extends CommanMathods{
             
             // Page Scrolling
             
-            WebElement ScrollToSection2 = findElementByXpath(driver, "//img[@alt='Fixed-Price-Development-Model']");
-            scrollToElement(driver, ScrollToSection2);
+            scrollToElementByXpath(driver, "//img[@alt='Fixed-Price-Development-Model']");
             Thread.sleep(3000);
             
             // Fixed Price Development Model Section
@@ -85,8 +83,7 @@ public class EngagementModel extends CommanMathods{
             
             // Page Scrolling
             
-            WebElement ScrollToSection3 = findElementByXpath(driver, "//img[@alt='Time-and-Material-Development-Model']");
-            scrollToElement(driver, ScrollToSection3);
+            scrollToElementByXpath(driver, "//img[@alt='Time-and-Material-Development-Model']");
             Thread.sleep(3000);
             
             // Time and Material Development Model Section

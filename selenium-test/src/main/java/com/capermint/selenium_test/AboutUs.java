@@ -1,7 +1,6 @@
 package com.capermint.selenium_test;
 
 import java.time.Duration;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -64,8 +63,7 @@ public class AboutUs extends CommanMathods {
             
             // Scroll Page
             
-            WebElement ScrollToOurThought = findElementByXpath(driver, "//h3[normalize-space()='Transparent and controlled process']");
-            scrollToElement(driver, ScrollToOurThought);
+            scrollToElementByXpath(driver, "//h3[normalize-space()='Transparent and controlled process']");
 
             // Our Thought Section
             
@@ -90,8 +88,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Scrolling
             
-            WebElement ScrollToOurValues = findElementByXpath(driver, "//h3[normalize-space()='What We Believe']");
-            scrollToElement(driver, ScrollToOurValues);
+            scrollToElementByXpath(driver, "//h3[normalize-space()='What We Believe']");
             
             // Our Values Section
             
@@ -109,8 +106,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Section
             
-            WebElement ScrollToProcess = findElementByXpath(driver, "//h4[normalize-space()='Effective Tactical Approaches']");
-            scrollToElement(driver, ScrollToProcess);
+            scrollToElementByXpath(driver, "//h4[normalize-space()='Effective Tactical Approaches']");
             
             // Process Section
             
@@ -133,8 +129,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Scroll
             
-            WebElement ScrollToChangeGame = findElementByXpath(driver, "//img[@title='ISO']");
-            scrollToElement(driver, ScrollToChangeGame);
+            scrollToElementByXpath(driver, "//img[@title='ISO']");
             
             // We're changing the game, just like you Section
             
@@ -165,8 +160,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Scroll
             
-            WebElement ScrollToAboutCEO = findElementByXpath(driver, "//span[normalize-space()='MD and CEO']");
-            scrollToElement(driver, ScrollToAboutCEO);
+            scrollToElementByXpath(driver, "//span[normalize-space()='MD and CEO']");
             
             // About Company`s CEO Section
             
@@ -180,8 +174,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Scroll
             
-            WebElement ScrollToTESTIMONIALS = findElementByXpath(driver, "//span[normalize-space()='MD and CEO']");
-            scrollToElement(driver, ScrollToTESTIMONIALS);
+            scrollToElementByXpath(driver, "//span[normalize-space()='MD and CEO']");
             
             // TESTIMONIALS Section
             
@@ -196,40 +189,11 @@ public class AboutUs extends CommanMathods {
             validateTitle(driver, "(//h6[normalize-space()='Mingeli Palata'])[1]", "Mingeli Palata", "ClientName");
             validateTitle(driver, "(//div[normalize-space()='CEO, MPTV'])[1]", "CEO, MPTV", "ClientPost");
             
-            Actions actions = new Actions(driver);
-            WebElement reviewsContainer = driver.findElement(By.cssSelector(".crumina-testimonial-item")); // Adjust as needed
-
-            for (int i = 0; i < 6; i++) { 
-                actions.clickAndHold(reviewsContainer)
-                       .moveByOffset(-300, 0)
-                       .release()
-                       .perform();
-
-                Thread.sleep(1000);
-
-                List<WebElement> reviews = driver.findElements(By.cssSelector(".crumina-testimonial-item"));
-                for (WebElement review : reviews) {
-                    String testimonialText = review.findElement(By.className("testimonial-text")).getText();
-                    String authorName = review.findElement(By.className("author-name")).getText();
-                    String authorCompany = review.findElement(By.className("author-company")).getText();
-
-                    if (!testimonialText.isEmpty() && !authorName.isEmpty()) {
-                        System.out.println("Review: " + testimonialText);
-                        System.out.println("Author: " + authorName + (authorCompany.isEmpty() ? "" : ", " + authorCompany));
-                        System.out.println("--------------------------------------------------");
-                    }
-                }
-                actions.clickAndHold(reviewsContainer)
-                       .moveByOffset(-300, 0)
-                       .release()
-                       .perform();
-                
-                Thread.sleep(1000);
+            scrapeReviews(driver, 7, 200);
     
             // Page Scrolling    
                 
-            WebElement ScrollToLetsTalk = findElementByXpath(driver, "(//a[normalize-space()='Contact Us'])[8]");
-            scrollToElement(driver, ScrollToLetsTalk);   
+            scrollToElementByXpath(driver, "(//a[normalize-space()='Contact Us'])[8]");
             
             // Let`s Talk Section
             
@@ -242,8 +206,7 @@ public class AboutUs extends CommanMathods {
             
             // Page Scrolling
             
-            WebElement ScrollToAboutUs = findElementByXpath(driver, "//h4[normalize-space()='Cost Effective Solutions']");
-            scrollToElement(driver, ScrollToAboutUs);
+            scrollToElementByXpath(driver, "//h4[normalize-space()='Cost Effective Solutions']");
             
             // About Us Section
             
@@ -275,10 +238,8 @@ public class AboutUs extends CommanMathods {
             validateTitle(driver, "//h4[normalize-space()='Best Practices Beyond the Limits']", "Best Practices Beyond the Limits", "Content2 Title");
             validateTitle(driver, "//p[contains(text(),'We follow the standard architectural practice with')]", "We follow the standard architectural practice with skills, high-graphical art, animation, and advanced tools & technologies. However, our creative idea is not ordinary but just beyond the ordinary.", "Content2");
 
-            }
             Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
             e.printStackTrace();
